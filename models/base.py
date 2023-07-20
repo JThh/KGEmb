@@ -169,6 +169,7 @@ class KGModel(nn.Module, ABC):
                 rhs = self.get_rhs(these_queries, eval_mode=False)
 
                 scores = self.score(q, candidates, eval_mode=True)
+                # print(scores)
                 targets = self.score(q, rhs, eval_mode=False)
 
                 # set filtered and true scores to -1e6 to be ignored
@@ -205,6 +206,7 @@ class KGModel(nn.Module, ABC):
                 q[:, 2] = tmp
                 q[:, 1] += self.sizes[1] // 2
             ranks = self.get_ranking(q, filters[m], batch_size=batch_size)
+            # print(ranks)
             mean_rank[m] = torch.mean(ranks).item()
             mean_reciprocal_rank[m] = torch.mean(1. / ranks).item()
             hits_at[m] = torch.FloatTensor((list(map(

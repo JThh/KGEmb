@@ -21,7 +21,7 @@ def get_idx(path):
     for split in ["train", "valid", "test"]:
         with open(os.path.join(path, split), "r") as lines:
             for line in lines:
-                lhs, rel, rhs = line.strip().split("\t")
+                lhs, rel, rhs = line.strip().split(" ")
                 entities.add(lhs)
                 entities.add(rhs)
                 relations.add(rel)
@@ -44,7 +44,7 @@ def to_np_array(dataset_file, ent2idx, rel2idx):
     examples = []
     with open(dataset_file, "r") as lines:
         for line in lines:
-            lhs, rel, rhs = line.strip().split("\t")
+            lhs, rel, rhs = line.strip().split(" ")
             try:
                 examples.append([ent2idx[lhs], rel2idx[rel], ent2idx[rhs]])
             except ValueError:
